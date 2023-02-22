@@ -1,4 +1,4 @@
-from app import create_app
+from blog.app import create_app
 
 # Запуск проекта
 if __name__ == '__main__':
