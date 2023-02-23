@@ -12,7 +12,7 @@ USERS = {
 
 
 @user.route('/')
-def user_list():
+def users_list():
     return render_template("users/list.html", users=USERS)
 
 

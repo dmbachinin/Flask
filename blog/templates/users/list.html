@@ -11,7 +11,6 @@
         {% for user_id in users %}
         <ul>
             <li><a href="{{ url_for('user.get_user',pk=user_id)}}">{{users[user_id]}}</a></li>
-
         </ul>
         {%endfor%}
     </div>
