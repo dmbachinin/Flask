@@ -1,9 +1,16 @@
 from flask import Flask, Response, request
 from blog.user.views import user
 from blog.report.views import report
+import json
+from blog.models.database import db
+
 
 def create_app() -> Flask:
     app = Flask(__name__)
+
+    app.config.from_file('settings.json', load=json.load)
+    db.init_app(app)
+
     register_blueprints(app)
     return app
 
