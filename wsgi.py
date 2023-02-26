@@ -10,6 +10,12 @@ def init_db():
     print("done!")
 
 
+@app.cli.command('delete-db')
+def init_db():
+    db.drop_all()
+    print("done!")
+
+
 @app.cli.command('create-users')
 def create_users():
     from blog.models import User
@@ -23,3 +29,16 @@ def create_users():
     db.session.commit()
 
     print(f"done! create users: {user1.user_name}, {user2.user_name}, {user3.user_name}")
+
+
+@app.cli.command('create-articles')
+def create_users():
+    from blog.models import Articles
+    article1 = Articles(id=1, author=1, title='Как жить?', text="Никак :(")
+    article2 = Articles(id=2, author=2, title='Лучшие люди', text="Все!")
+
+    db.session.add(article1)
+    db.session.add(article2)
+    db.session.commit()
+
+    print(f"done! create articles: {article1.title}, {article2.title}")

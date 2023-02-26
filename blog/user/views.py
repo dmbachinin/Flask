@@ -19,9 +19,9 @@ def users_list():
 
 @user.route('/<int:pk>')
 def get_user(pk: int):
-    user_correct = User.query.filter_by(id=pk).one_or_none()
-    if not user_correct:
+    _user_correct = User.query.filter_by(id=pk).one_or_none()
+    if not _user_correct:
         raise NotFound(f"User with id = {pk} not found")
-    return render_template("users/details.html", user=user_correct)
+    return render_template("users/details.html", user=_user_correct)
 
 
