@@ -1,3 +1,6 @@
+from flask import redirect
+from werkzeug.security import generate_password_hash
+
 from blog.app import create_app
 from blog.models.database import db
 
@@ -19,9 +22,11 @@ def init_db():
 @app.cli.command('create-users')
 def create_users():
     from blog.models import User
-    user1 = User(id=1, user_name="Dima", email='dm@yandex.ru', is_staff=True)
-    user2 = User(id=2, user_name="Anna", email='neAnna@mail.ru', is_staff=False)
-    user3 = User(id=3, user_name="Viva", email='viva@google.com', is_staff=False)
+    user1 = User(id=1, user_name="Dima", email='dm@yandex.ru', is_staff=True, password=generate_password_hash('Dima'))
+    user2 = User(id=2, user_name="Anna", email='neAnna@mail.ru', is_staff=False,
+                 password=generate_password_hash('Anna'))
+    user3 = User(id=3, user_name="Viva", email='viva@google.com', is_staff=False,
+                 password=generate_password_hash('Viva'))
 
     db.session.add(user1)
     db.session.add(user2)
@@ -42,3 +47,7 @@ def create_users():
     db.session.commit()
 
     print(f"done! create articles: {article1.title}, {article2.title}")
+
+@app.route('/', methods=["GET"])
+def index():
+    return redirect('/auth'), 200
