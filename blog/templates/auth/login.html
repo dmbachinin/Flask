@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+
+{% block title %}
+Authorization
+{% endblock %}
+
+{% block body %}
+<h1>Authorization</h1>
+<div class="row">
+    <div class="col">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{messages[0]}}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <form class="col g-3 mt-3" method="post" action="{{ url_for('auth.login') }}">
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="staticEmail" name="email" value="dm@yandex.ru">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword" name="password" value="Dima">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

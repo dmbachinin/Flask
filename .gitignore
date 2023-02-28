@@ -1,0 +1,3 @@
+/blog/settings.json
+/venv/*
+/instance/db.sqlite
