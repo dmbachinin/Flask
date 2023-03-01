@@ -1,3 +1,4 @@
 /blog/settings.json
 /venv/*
 /instance/db.sqlite
+/blog/configs.py
