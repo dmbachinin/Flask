@@ -16,5 +16,11 @@ class User(db.Model, UserMixin):
     articles = relationship("Articles")
 
     def __repr__(self):
-        return f"<USER {self.id} - {self.user_name}>"
+        return f"<USER {self.id} - {self.first_name}>"
+
+    def __int__(self, first_name, last_name, email, password):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.password = password
 

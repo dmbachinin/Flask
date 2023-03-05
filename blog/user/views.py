@@ -7,6 +7,7 @@ from blog.models import User
 user = Blueprint('user', __name__, url_prefix="/users", static_folder="../static")
 
 
+
 @user.route('/')
 @login_required
 def users_list():

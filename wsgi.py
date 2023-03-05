@@ -6,6 +6,7 @@ from blog.models.database import db
 
 app = create_app()
 
+
 @app.cli.command('init-db')
 def init_db():
     db.create_all()
@@ -47,8 +48,11 @@ def create_users():
 
     print(f"done! create articles: {article1.title}, {article2.title}")
 
+
 @app.route('/', methods=["GET"])
 def index():
     return redirect('/auth'), 200
 
-app.run()
+
+if __name__ == "__main__":
+    app.run()

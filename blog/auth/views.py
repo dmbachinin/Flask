@@ -1,12 +1,43 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from werkzeug.security import check_password_hash
-from flask_login import logout_user, login_user, login_required
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import logout_user, login_user, login_required, current_user
 
 from blog.app import login_manager
+from blog.forms.user import UserRegisterForm
 from blog.models import User
+from blog.models.database import db
 
 auth = Blueprint('auth', __name__, url_prefix="/auth", static_folder='../static')
 
+
+@auth.route('/register', methods=["POST", "GET"])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('user.get_user', pk=current_user.id))
+
+    form = UserRegisterForm(request.form)
+    errors = []
+    # Обработка регистрации пользователя
+    if request.method == "POST" and form.validate_on_submit():
+        if User.query.filter_by(email=form.email.data).count():
+            form.email.errors.append("Почта не уникальна")
+            return render_template("auth/register.html", form=form)
+
+        _user = User(
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            password=generate_password_hash(form.password.data),
+        )
+        db.session.add(_user)
+        db.session.commit()
+        login_user(_user)
+
+    return render_template(
+        "auth/register.html",
+        form=form,
+        errors=errors,
+    )
 
 @auth.route('/', methods=["POST", "GET"])
 def login():

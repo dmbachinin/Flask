@@ -3,10 +3,11 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from blog.configs import BaseConfig
 from blog.models.database import db
-
+from flask_wtf import CSRFProtect
 
 login_manager = LoginManager()
 migrate = Migrate()
+csrf = CSRFProtect()
 
 
 def create_app() -> Flask:
@@ -16,6 +17,7 @@ def create_app() -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db)
+    csrf.init_app(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)

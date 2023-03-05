@@ -3,3 +3,5 @@
 /blog/configs.py
 .idea/
 **/__pycache__/
+.project
+.dbeaver
