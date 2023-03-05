@@ -1,10 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
-import json
-import os
-
 from flask_migrate import Migrate
-
+from blog.configs import BaseConfig
 from blog.models.database import db
 
 
@@ -15,8 +12,7 @@ migrate = Migrate()
 def create_app() -> Flask:
     app = Flask(__name__)
 
-    cfg_name = os.environ.get("CONFIG_NAME") or "BaseConfig"
-    app.config.from_object(f"blog.configs.{cfg_name}")
+    app.config.from_object(BaseConfig)
 
     db.init_app(app)
     migrate.init_app(app, db)

@@ -1,6 +1,5 @@
-/blog/settings.json
 /venv/*
 /instance/db.sqlite
 /blog/configs.py
 .idea/
-__pycache__/
+**/__pycache__/
