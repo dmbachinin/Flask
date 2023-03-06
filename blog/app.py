@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
+
 from blog.configs import BaseConfig
 from blog.models.database import db
 from flask_wtf import CSRFProtect
@@ -30,8 +31,10 @@ def register_blueprints(app: Flask):
     from blog.user.views import user
     from blog.report.views import report
     from blog.auth.views import auth
+    from blog.author.views import author
 
     app.register_blueprint(user)
+    app.register_blueprint(author)
     app.register_blueprint(report)
     app.register_blueprint(auth)
 
