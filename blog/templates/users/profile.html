@@ -5,5 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1>ID:{{user.id}} NAME: {{user.user_name}}</h1>
+    <h1>User profile</h1>
+    <div><b>ID:</b> {{user.id}}</div>
+    <div><b>Name:</b> {{user.first_name}}</div>
+    <div><b>Surname:</b> {{user.last_name}}</div>
+    <div><a href="{{ url_for('user.users_list')}}">Друзья</a></div>
 {% endblock %}

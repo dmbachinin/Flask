@@ -3,7 +3,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import logout_user, login_user, login_required, current_user
 
 from blog.app import login_manager
-from blog.forms.user import UserRegisterForm
+from blog.forms.userAuth import UserAuthorizationForm
+from blog.forms.userRegistration import UserRegisterForm
 from blog.models import User
 from blog.models.database import db
 
@@ -41,19 +42,21 @@ def register():
 
 @auth.route('/', methods=["POST", "GET"])
 def login():
-    if request.method == "GET":
-        return render_template('/auth/login.html')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    user = User.query.filter_by(email=email).first()
+    form = UserAuthorizationForm(request.form)
+    errors = []
 
-    if not user or not check_password_hash(user.password, password):
-        flash('login or password error')
-        return redirect(url_for('auth.login'))
+    if request.method == "POST" and form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        user = User.query.filter_by(email=email).first()
+        if not user or not check_password_hash(user.password, password):
+            errors.append("Неправильный логин или пароль")
+            return render_template("/auth/login.html", form=form, errors=errors)
 
-    login_user(user)
-    return redirect(url_for('user.get_user', pk=user.id))
+        login_user(user)
+        return redirect(url_for('user.get_user', pk=user.id))
 
+    return render_template("/auth/login.html", form=form, errors=errors)
 
 @auth.route('/logout')
 @login_required

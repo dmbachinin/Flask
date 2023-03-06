@@ -1,3 +1,5 @@
+{% from "macro/formhelpers.html" import render_field %}
+
 {% extends 'base.html'%}
 
 {% block title %}
@@ -6,34 +8,18 @@ Authorization
 
 {% block body %}
 <h1>Authorization</h1>
-<div class="row">
-    <div class="col">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-danger" role="alert">
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <form class="col g-3 mt-3" method="post" action="{{ url_for('auth.login') }}">
-            <div class="mb-3 row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="staticEmail" name="email" value="dm@yandex.ru">
-                </div>
+    {% if errors %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
             </div>
-            <div class="mb-3 row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword" name="password" value="Dima">
-                </div>
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Login</button>
-            </div>
-        </form>
-    </div>
-</div>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {% for field in ["email", "password"] %}
+            {{ render_field(form[field]) }}
+        {% endfor %}
+        {{ form.submit(class="btn btn-primary mb-3") }}
+    </form>
 {% endblock %}
