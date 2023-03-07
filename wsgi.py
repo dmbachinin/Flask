@@ -48,6 +48,11 @@ def create_users():
 
     print(f"done! create articles: {article1.title}, {article2.title}")
 
+
 @app.route('/', methods=["GET"])
 def index():
     return redirect('/auth'), 200
+
+
+if __name__ == "__main__":
+    app.run()

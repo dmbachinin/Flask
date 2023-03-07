@@ -11,4 +11,4 @@ COPY blog ./blog
 
 EXPOSE 5000
 
-CMD ["flask", "run"]
+
