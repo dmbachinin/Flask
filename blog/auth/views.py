@@ -33,6 +33,7 @@ def register():
         db.session.add(_user)
         db.session.commit()
         login_user(_user)
+        return redirect(url_for('user.get_user', pk=current_user.id))
 
     return render_template(
         "auth/register.html",
