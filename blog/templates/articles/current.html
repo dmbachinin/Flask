@@ -9,7 +9,7 @@
     <p>
         {{article.text}}
     </p>
-    <div>Author: {{article.author_id}}</div>
+    <div>Author: {{article.authors.user.first_name}}</div>
     <div>Created at: {{article.created_at}}</div>
     <div>Updated at: {{article.updated_at}}</div>
 {% endblock %}
