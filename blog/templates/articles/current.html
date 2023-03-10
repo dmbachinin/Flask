@@ -1,3 +1,5 @@
+{% from "macro/refactorDate.html" import refactorDate %}
+
 {% extends 'base.html'%}
 
 {% block title %}
@@ -6,10 +8,23 @@
 
 {% block body %}
     <h1>{{article.title}}</h1>
-    <p>
-        {{article.text}}
-    </p>
-    <div>Author: {{article.authors.user.first_name}}</div>
-    <div>Created at: {{article.created_at}}</div>
-    <div>Updated at: {{article.updated_at}}</div>
+    <div class="row">
+        <div class="col-md 12">{{article.text}}</div>
+    </div>
+    <div class="row">
+        <div class="col 6">
+            <div><small>Автор:
+                <a href="{{ url_for('user.get_user',pk=article.author_id)}}">{{article.author.user.first_name}} {{article.author.user.last_name}}
+                </a></small></div>
+            <div><small class="text-muted">Дата создания: {{refactorDate(article.created_at)}}</small></div>
+            <div><small class="text-muted">Дата изменнения: {{refactorDate(article.updated_at)}}</small></div>
+        </div>
+        <div class="col 6">
+            <span class="badge text-bg-primary">Primary</span>
+            <span class="badge text-bg-primary">Primary</span>
+            <span class="badge text-bg-primary">Primary</span>
+            <span class="badge text-bg-primary">Primary</span>
+        </div>
+    </div>
+
 {% endblock %}

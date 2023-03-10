@@ -10,4 +10,4 @@ class Author(db.Model):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     user = relationship("User", back_populates="author")
-    article = relationship("Articles", back_populates="authors")
+    articles = relationship("Articles", back_populates="author")

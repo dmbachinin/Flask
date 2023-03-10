@@ -6,4 +6,5 @@ class ArticleCreateForm(FlaskForm):
     title = StringField("Загаловок", [validators.DataRequired()])
     text = TextAreaField("Содержание", [validators.DataRequired()])
 
+
     submit = SubmitField('Создать')
