@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{article.title}}</h1>
+    <div class="row">
+        <h1>{{article.title}}</h1>
+    </div>
     <div class="row">
         <div class="col-md 12">{{article.text}}</div>
     </div>
@@ -20,11 +22,12 @@
             <div><small class="text-muted">Дата изменнения: {{refactorDate(article.updated_at)}}</small></div>
         </div>
         <div class="col 6">
-            <span class="badge text-bg-primary">Primary</span>
-            <span class="badge text-bg-primary">Primary</span>
-            <span class="badge text-bg-primary">Primary</span>
-            <span class="badge text-bg-primary">Primary</span>
+            {% if article.tags %}
+                <div><small>Список тегов:</small></div>
+                {% for tag in article.tags %}
+                    <span class="tag tag-pill tag-default">{{ tag.name }}</span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
-
 {% endblock %}
