@@ -13,7 +13,8 @@ class User(db.Model, UserMixin):
     email = Column(String(255), unique=True)
     is_staff = Column(Boolean, nullable=False, default=False)
     password = Column(String(255), nullable=False)
-    articles = relationship("Articles")
+
+    author = relationship("Author", uselist=False, back_populates="user")
 
     def __repr__(self):
         return f"<USER {self.id} - {self.first_name}>"

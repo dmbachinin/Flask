@@ -21,5 +21,6 @@ Authorization
             {{ render_field(form[field]) }}
         {% endfor %}
         {{ form.submit(class="btn btn-primary mb-3") }}
+        <a class="btn btn-primary mb-3" href="{{ url_for('auth.register') }}" role="button">Регистрация</a>
     </form>
 {% endblock %}
