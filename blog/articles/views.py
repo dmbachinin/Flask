@@ -6,6 +6,7 @@ from werkzeug.exceptions import NotFound
 from blog.forms.article import ArticleCreateForm
 from blog.models import Articles, Author, Tag
 from blog.models.database import db
+from blog.models.tag import article_tag_associations_table
 
 article = Blueprint('article', __name__, url_prefix="/article", static_folder="../static")
 
@@ -55,3 +56,17 @@ def article_current(pk: int):
     if current_article:
         return render_template("articles/current.html", article=current_article)
     raise NotFound(f"Article with id = {pk} not found")
+
+@article.route('/list/tag/<string:tag_name>')
+def article_by_tag(tag_name: str):
+    tag = Tag.query.filter_by(name=tag_name).one_or_none()
+    if tag:
+        all_article = Articles.query.all()
+        article_with_tag = []
+        for article in all_article:
+            if tag in article.tags:
+                article_with_tag.append(article)
+
+        return render_template("articles/list.html", articles=article_with_tag)
+    # raise NotFound(f"Article with tag = {tag_name} not found")
+    raise NotFound(f"Tag with name = {tag_name} not found")
