@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
+from blog.models.tag import article_tag_associations_table
 from blog.models.database import db
 
 
@@ -16,7 +17,8 @@ class Articles(db.Model):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    authors = relationship("Author", back_populates="article")
+    author = relationship("Author", back_populates="articles")
+    tags = relationship("Tag", secondary=article_tag_associations_table, back_populates="articles")
 
     def __repr__(self):
         return f"<ARTICLE {self.author} - {self.title}>"
